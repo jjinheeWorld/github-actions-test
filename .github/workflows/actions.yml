@@ -1,9 +1,20 @@
-name: GitHub Actions 연습하기
+name: GitHub Actions로 테스트 자동화하기
 on: push
 
 jobs:
-  push-job:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: 첫 번째 작업
-        run: echo "첫 번째 작업 실행!"
+      - name: GitHub Repository 불러오기
+        uses: actions/checkout@v5
+
+      - name: Node.js 설치하기
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: 의존성 라이브러리 설치하기
+        run: npm ci
+
+      - name: 테스트 실행하기
+        run: npm run test
